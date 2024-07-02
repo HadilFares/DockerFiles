@@ -25,14 +25,13 @@ WORKDIR /usr/src/app
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
 # Copy the necessary files from the build stage in one line
-COPY --from=build /usr/src/app/package*.json /usr/src/app/dist /usr/src/app/node_modules ./
+COPY --from=build /usr/src/app .
 # Change ownership of the working directory
-RUN chown -R appuser:appgroup /usr/src/app
-
+RUN chown -R appuser:appgroup /usr/src/app/dist
 # Switch to the non-root user
 USER appuser
 # Expose the application port
 EXPOSE 3000
 
 # Start the application
-CMD ["node", "dist/main"]
+CMD ["node", "dist/main.js"]
