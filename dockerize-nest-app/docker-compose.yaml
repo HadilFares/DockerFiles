@@ -1,0 +1,45 @@
+version: '3'
+services:
+  db:
+    image: mongo:latest
+    container_name: db_mongo
+    restart: always
+    environment:
+      MONGO_URI: ${DATABASE_URI}
+      # DATABASE_NAME: ${DATABASE_NAME}
+      # DATABASE_USER: ${DATABASE_USER}
+      # DATABASE_PASS: ${DATABASE_PASS}
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongodata:/data/db
+    # networks:
+    #   - internal-network
+
+  nest-app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - '4000:3000'
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - db
+    # networks:
+    #   - internal-network
+    environment:
+      MONGO_URI: ${DATABASE_URI}
+      # DATABASE_NAME: ${DATABASE_NAME}
+      # DATABASE_USER: ${DATABASE_USER}
+      # DATABASE_PASS: ${DATABASE_PASS}
+    restart: always
+
+volumes:
+  mongodata:
+
+networks:
+  internal-network:
+    driver: bridge
+    internal: true

@@ -31,7 +31,7 @@ RUN chown -R appuser:appgroup /usr/src/app/dist
 # Switch to the non-root user
 USER appuser
 # Expose the application port
-EXPOSE 3000
+EXPOSE 4000
 
 # Start the application
 CMD ["node", "dist/main.js"]
