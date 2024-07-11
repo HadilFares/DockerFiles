@@ -39,7 +39,7 @@ services:
 volumes:
   mongodata:
 
-networks:
-  internal-network:
-    driver: bridge
-    internal: true
+#networks:
+  #internal-network:
+   # driver: bridge
+    #internal: true
